@@ -35,7 +35,6 @@ type PbProjectFields = {
   cover: CoverColor;
   category: ProjectCategory;
   featured?: boolean;
-  githubPlanned?: boolean;
   github?: string;
   photo?: string;
 };
@@ -60,7 +59,6 @@ function toProject(f: PbProjectFields): Project {
     approach: f.approach ?? [],
     stack: f.stack ?? [],
     github: f.github ?? "",
-    githubPlanned: f.githubPlanned ?? false,
     photo: f.photo || undefined,
     category: f.category,
     featured: f.featured ?? false,

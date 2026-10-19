@@ -68,11 +68,8 @@ function CaseStudy() {
                 rel="noopener noreferrer"
                 className="mt-2 block font-mono text-sm hover:underline"
               >
-                {p.githubPlanned ? "↗ github.com/… (planned)" : "↗ View on GitHub"}
+                ↗ View on GitHub
               </a>
-              {p.githubPlanned && (
-                <p className="mt-1 text-xs text-muted-foreground">Repository being prepared.</p>
-              )}
             </div>
           )}
         </aside>

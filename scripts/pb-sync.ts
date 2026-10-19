@@ -82,7 +82,6 @@ async function main() {
       cover: p.cover,
       category: CATEGORY_BY_SLUG.get(p.slug) ?? p.category ?? "Full-Stack",
       featured: p.featured ?? false,
-      githubPlanned: p.githubPlanned ?? false,
       published: true,
       github: p.github,
       photo: p.photo ?? "",

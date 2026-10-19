@@ -32,16 +32,14 @@ export type Project = {
   approach: { title: string; body: string }[];
   stack: string[];
   github: string;
-  githubPlanned?: boolean;
   photo?: string;
   category?: ProjectCategory;
   featured?: boolean;
   upcoming?: boolean;
 };
 
-const gh = (name: string, planned = false) => ({
+const gh = (name: string) => ({
   github: `https://github.com/Elouahabi-Naoufal/${name}`,
-  githubPlanned: planned,
   photo: `/photos/${name}.png`,
 });
 
@@ -108,7 +106,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["Python", "Apache Kafka", "Spark Structured Streaming", "scikit-learn", "XGBoost", "PyTorch", "Flask", "Docker"],
     featured: true,
-    ...gh("nids-cic-ids2017-kafka-spark", true),
+    ...gh("nids-cic-ids2017-kafka-spark"),
   },
   {
     slug: "data-warehouse-etl",
@@ -129,7 +127,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["SQL", "Snowflake", "dbt", "Power BI", "DAX", "Python", "Pandas"],
     featured: true,
-    ...gh("data-warehouse-etl-star-schema", true),
+    ...gh("data-warehouse-etl-star-schema"),
   },
   {
     slug: "chatsphere",
@@ -150,7 +148,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["Node.js", "Express", "WebSocket", "React", "Ollama", "OpenRouter", "Docker"],
     featured: true,
-    ...gh("chatsphere-ai-chatbot", true),
+    ...gh("chatsphere-ai-chatbot"),
   },
   {
     slug: "homelab",
@@ -271,7 +269,7 @@ export const PROJECTS: Project[] = [
       { title: "Docker Compose", body: "Multi-container environment, fully reproducible. Ports documented; `docker compose up` and the pipeline is live." },
     ],
     stack: ["Airbyte", "MinIO", "Apache Airflow", "Docker", "Python"],
-    ...gh("airbyte-minio-airflow-pipeline", true),
+    ...gh("airbyte-minio-airflow-pipeline"),
   },
   {
     slug: "dna-mapreduce",
@@ -291,7 +289,7 @@ export const PROJECTS: Project[] = [
       { title: "MLlib clustering & classification", body: "KMeans clusters sequence vectors; RandomForest classifies. Results written back to HDFS, visualized in Python." },
     ],
     stack: ["Python", "Hadoop Streaming", "HDFS", "Spark", "Spark MLlib", "Docker"],
-    ...gh("dna-sequence-mapreduce", true),
+    ...gh("dna-sequence-mapreduce"),
   },
   {
     slug: "pagerank-hdfs",
@@ -311,7 +309,7 @@ export const PROJECTS: Project[] = [
       { title: "Iterate to convergence", body: "Loop until rank deltas fall below epsilon. Damping factor 0.85; convergence tracked across iterations." },
     ],
     stack: ["Hadoop", "HDFS", "YARN", "MapReduce", "Python"],
-    ...gh("pagerank-hdfs-mapreduce", true),
+    ...gh("pagerank-hdfs-mapreduce"),
   },
   {
     slug: "bibliometrics-mapreduce",
@@ -331,7 +329,7 @@ export const PROJECTS: Project[] = [
       { title: "Ranked extraction", body: "Keyword frequency, publications per year, top countries, most prolific authors — five jobs in total." },
     ],
     stack: ["Hadoop Streaming", "HDFS", "Python", "Docker"],
-    ...gh("healthcare-bibliometrics-mapreduce", true),
+    ...gh("healthcare-bibliometrics-mapreduce"),
   },
   {
     slug: "sentiment-imdb",
@@ -351,7 +349,7 @@ export const PROJECTS: Project[] = [
       { title: "Logistic Regression + evaluation", body: "Trained on both vectorizations; compared Accuracy, Precision, Recall, F1. TF-IDF won across the board." },
     ],
     stack: ["Python", "pandas", "scikit-learn", "NLTK", "matplotlib", "seaborn"],
-    ...gh("sentiment-analysis-imdb", true),
+    ...gh("sentiment-analysis-imdb"),
   },
   {
     slug: "excel-extractor",
@@ -392,7 +390,7 @@ export const PROJECTS: Project[] = [
       { title: "Emergent coordination", body: "Conflict resolution, capacity limits, and scheduling emerge from local agent interactions — not a top-level algorithm." },
     ],
     stack: ["Java", "JADE", "FIPA ACL"],
-    ...gh("sma-hospital-jade", true),
+    ...gh("sma-hospital-jade"),
   },
   {
     slug: "sma-room-booking",
@@ -411,7 +409,7 @@ export const PROJECTS: Project[] = [
       { title: "Persistence", body: "DBagent handles all database writes — agents stay stateless regarding storage." },
     ],
     stack: ["Java", "JADE", "SQLite"],
-    ...gh("sma-room-booking-jade", true),
+    ...gh("sma-room-booking-jade"),
   },
   {
     slug: "personal-assistant",
@@ -431,7 +429,7 @@ export const PROJECTS: Project[] = [
       { title: "Flask API", body: "Simple HTTP interface. Curl-able, scriptable, testable." },
     ],
     stack: ["Python", "Ollama", "Flask", "SQLite"],
-    ...gh("personal-assistant-ollama", true),
+    ...gh("personal-assistant-ollama"),
   },
 
   // ── FULL-STACK ────────────────────────────────────────────────
@@ -547,7 +545,7 @@ export const PROJECTS: Project[] = [
       { title: "What I'd do differently", body: "Proper API layer separation, real auth, tests. What I'd keep: the analytics view." },
     ],
     stack: ["Django", "Python", "PostgreSQL", "HTML/CSS", "Docker"],
-    ...gh("stockmaster-python", true),
+    ...gh("stockmaster-python"),
   },
   {
     slug: "emsi-share-learn",
@@ -585,7 +583,7 @@ export const PROJECTS: Project[] = [
       { title: "Graceful degradation", body: "Notification service down? Appointment still succeeds; notification retries. Failure isolation, not failure propagation." },
     ],
     stack: ["Java", "Spring Boot", "MariaDB", "React"],
-    ...gh("medical-appointments-microservices", true),
+    ...gh("medical-appointments-microservices"),
   },
 
   // ── MOBILE & DESKTOP ──────────────────────────────────────────
@@ -606,7 +604,7 @@ export const PROJECTS: Project[] = [
       { title: "Android lifecycle traps", body: "The deep dive that makes Android development uniquely frustrating — and understanding it makes you better." },
     ],
     stack: ["Java", "Android SDK", "Retrofit", "Room", "Material Design"],
-    ...gh("m-health-android", true),
+    ...gh("m-health-android"),
   },
   {
     slug: "salah-android",
@@ -663,7 +661,7 @@ export const PROJECTS: Project[] = [
       { title: "JavaFX + MongoDB", body: "UI updates via Platform.runLater; event logging to MongoDB." },
     ],
     stack: ["Java", "JavaFX", "MongoDB"],
-    ...gh("air-traffic-manager-javafx", true),
+    ...gh("air-traffic-manager-javafx"),
   },
   {
     slug: "pdfforge",
@@ -682,7 +680,7 @@ export const PROJECTS: Project[] = [
       { title: "8 tools", body: "Merge, split, compress, convert, rotate, watermark, extract, page numbering." },
     ],
     stack: ["JavaScript", "PDF-lib", "Web Workers"],
-    ...gh("pdfforge", true),
+    ...gh("pdfforge"),
   },
   {
     slug: "dbsentinel-dbgui",

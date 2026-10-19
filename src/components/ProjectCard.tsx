@@ -48,9 +48,6 @@ export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined
           <span className="border-2 border-ink bg-ink px-2 py-1 text-paper">15 DAGs →</span>
         </div>
       )}
-      {p.githubPlanned && (
-        <span className="absolute bottom-4 right-4 rotate-[-6deg] border-2 border-ink bg-steel px-3 py-1 font-mono text-xs">repo planned</span>
-      )}
       {p.upcoming && (
         <span className="absolute bottom-4 right-4 rotate-[-6deg] border-2 border-ink bg-steel px-3 py-1 font-mono text-xs">coming soon</span>
       )}
@@ -72,10 +69,8 @@ export function ProjectCard({ p, big }: { p: Project; big?: boolean | undefined 
         <div className="mt-5 flex items-center justify-between">
           <p className="font-display font-bold group-hover:underline">{p.upcoming ? "Peek at the slot →" : "Read case study →"}</p>
           {p.github && (
-            <span
-              className={`font-mono text-xs ${p.githubPlanned ? "text-muted-foreground" : "text-foreground"}`}
-            >
-              {p.githubPlanned ? "↗ planned repo" : "↗ github"}
+            <span className="font-mono text-xs text-foreground">
+              ↗ github
             </span>
           )}
         </div>

@@ -678,14 +678,14 @@ export const PROJECT_DETAILS: Record<string, ProjectDetails> = {
   },
   "pixel-perfect": {
     description:
-      "This portfolio site — self-hosted SSR at naoufalelouahabi.com, honest about what's real: every project links to GitHub or an explicitly planned repo name. All 36 case studies live in one typed data file; adding a project means adding one object.\n\nTanStack Start with file-based routing and type-safe params: index (home), about, cv, contact, and work.$slug for dynamic case-study pages. React 19, TypeScript 5.8, Tailwind CSS 4.2, Radix/shadcn components, neobrutalist design system. Multi-stage Dockerfile (node:22-alpine build → non-root production image on PORT 3000) deployed via Dokploy on my Contabo VPS behind Traefik with automatic Let's Encrypt TLS.\n\nThe Project type carries everything the pages render — slug, summary, context, approach steps, stack, cover colour, category, featured flag, GitHub fields, photo. ProjectCard has photo fallback and a githubPlanned badge. SSR for SEO and first paint; type-safe route params catch data errors at build time.",
+      "This portfolio site — self-hosted SSR at naoufalelouahabi.com, honest about what's real: every project links to GitHub or an explicitly planned repo name. All 36 case studies live in one typed data file; adding a project means adding one object.\n\nTanStack Start with file-based routing and type-safe params: index (home), about, cv, contact, and work.$slug for dynamic case-study pages. React 19, TypeScript 5.8, Tailwind CSS 4.2, Radix/shadcn components, neobrutalist design system. Multi-stage Dockerfile (node:22-alpine build → non-root production image on PORT 3000) deployed via Dokploy on my Contabo VPS behind Traefik with automatic Let's Encrypt TLS.\n\nThe Project type carries everything the pages render — slug, summary, context, approach steps, stack, cover colour, category, featured flag, GitHub fields, photo. ProjectCard has photo fallback. SSR for SEO and first paint; type-safe route params catch data errors at build time.",
     architecture:
-      "File-based routes: __root, index, about, cv, contact, work.$slug (type-safe dynamic params). Data: src/lib/site.ts — typed PROJECTS[36], SITE, TOOLKIT, EXPLORING, ARCHIVE, gh() helper. Components: SiteChrome, ProjectCard (photo fallback + githubPlanned badge), ~46 ui primitives. Build: Vite 8 + Nitro node-server preset; multi-stage Dockerfile (npm install --ignore-scripts → node .output/server/index.mjs, non-root, PORT 3000). Deploy: Dokploy on Contabo VPS, Traefik + Let's Encrypt.",
+      "File-based routes: __root, index, about, cv, contact, work.$slug (type-safe dynamic params). Data: src/lib/site.ts — typed PROJECTS[36], SITE, TOOLKIT, EXPLORING, ARCHIVE, gh() helper. Components: SiteChrome, ProjectCard (photo fallback), ~46 ui primitives. Build: Vite 8 + Nitro node-server preset; multi-stage Dockerfile (npm install --ignore-scripts → node .output/server/index.mjs, non-root, PORT 3000). Deploy: Dokploy on Contabo VPS, Traefik + Let's Encrypt.",
     features: [
       "36 case studies in one typed data file — adding a project = one object",
       "Type-safe dynamic routes (work.$slug) with build-time error catching",
       "SSR for SEO and first paint",
-      "Photo fallback + githubPlanned badge on every card",
+      "Photo fallback on every card",
       "Neobrutalist design system in Tailwind 4",
       "Self-hosted: Docker → Dokploy → Traefik + Let's Encrypt",
     ],
