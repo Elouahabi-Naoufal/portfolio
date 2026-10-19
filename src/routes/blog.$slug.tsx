@@ -46,6 +46,7 @@ function ArticlePage() {
           {a.tags.map((t) => <span key={t} className="tag bg-blue">{t}</span>)}
         </div>
       )}
+      {a.coverImage && <img src={a.coverImage} alt="" className="mt-8 w-full border-2 border-ink" loading="eager" />}
       <div className="mt-10 text-base leading-relaxed prose">{renderMd(a.content)}</div>
     </article>
   );

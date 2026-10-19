@@ -33,6 +33,7 @@ export type Project = {
   stack: string[];
   github: string;
   photo?: string;
+  coverImage?: string;
   category?: ProjectCategory;
   featured?: boolean;
   upcoming?: boolean;

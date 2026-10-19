@@ -19,6 +19,7 @@ export type ContentBundle = {
 };
 
 type PbProjectFields = {
+  id: string;
   slug: string;
   num: string;
   title: string;
@@ -37,6 +38,7 @@ type PbProjectFields = {
   featured?: boolean;
   github?: string;
   photo?: string;
+  coverImage?: string;
 };
 
 function client(): PocketBase | null {
@@ -47,6 +49,7 @@ function client(): PocketBase | null {
 }
 
 function toProject(f: PbProjectFields): Project {
+  const pbUrl = resolveUrl();
   return {
     slug: f.slug,
     num: f.num,
@@ -60,6 +63,7 @@ function toProject(f: PbProjectFields): Project {
     stack: f.stack ?? [],
     github: f.github ?? "",
     photo: f.photo || undefined,
+    coverImage: f.coverImage && pbUrl ? `${pbUrl}/api/files/projects/${f.id}/${f.coverImage}` : undefined,
     category: f.category,
     featured: f.featured ?? false,
   };

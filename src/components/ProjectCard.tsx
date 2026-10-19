@@ -14,9 +14,12 @@ const coverBg: Record<string, string> = {
 };
 
 export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined }) {
+  const coverBgClass = p.coverImage ? "bg-paper" : coverBg[p.cover];
   return (
-    <div className={`relative overflow-hidden border-b-2 border-ink ${coverBg[p.cover]} ${big ? "h-72 md:h-96" : "h-56"}`}>
-      {p.photo && (
+    <div className={`relative overflow-hidden border-b-2 border-ink ${coverBgClass} ${big ? "h-72 md:h-96" : "h-56"}`}>
+      {p.coverImage ? (
+        <img src={p.coverImage} alt={p.title} className="absolute inset-0 h-full w-full object-cover" loading="eager" />
+      ) : p.photo ? (
         <img
           src={p.photo}
           alt={p.title}
@@ -24,8 +27,8 @@ export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined
           loading="lazy"
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
         />
-      )}
-      <span className="absolute left-4 top-3 font-display text-7xl font-bold md:text-8xl">{p.num}</span>
+      ) : null}
+      {!p.coverImage && <span className="absolute left-4 top-3 font-display text-7xl font-bold md:text-8xl">{p.num}</span>}
       {p.slug === "entity-resolution" && (
         <svg viewBox="0 0 200 120" className="absolute bottom-3 right-3 h-3/4" aria-hidden>
           {NODES.map(([x, y], i) => (
