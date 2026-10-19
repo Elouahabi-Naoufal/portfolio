@@ -1,78 +1,238 @@
-# naoufalelouahabi.com
+<a id="readme-top"></a>
 
-Personal portfolio — TanStack Start + React + Tailwind (neobrutalist design), content served from PocketBase with a static fallback baked into the repo.
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-## Stack
+<br />
+<div align="center">
+  <h3 align="center">Portfolio</h3>
 
-- **Frontend**: TanStack Start (SSR) · React · Tailwind · deployed on Dokploy as a git application
-- **Content**: [PocketBase](https://pocketbase.io) (v0.40.x) running as a Dokploy compose app at `pb.naoufalelouahabi.com`
-- **Repo**: <https://github.com/Elouahabi-Naoufal/portfolio>
+  <p align="center">
+    Personal developer portfolio built with TanStack Start, React and Tailwind, with content
+    managed in PocketBase and a static fallback baked into the repository.
+    <br />
+    <a href="https://github.com/Elouahabi-Naoufal/portfolio"><strong>Explore the source »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Elouahabi-Naoufal/portfolio/issues/new?labels=bug">Report Bug</a>
+    &middot;
+    <a href="https://github.com/Elouahabi-Naoufal/portfolio/issues/new?labels=enhancement">Request Feature</a>
+  </p>
+</div>
 
-## Local development
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
+## About The Project
+
+This is the current version of my personal portfolio. It is a TanStack Start application with
+server-side rendering, React and Tailwind CSS, using a neobrutalist visual style.
+
+Pages:
+
+* `/` — hero, selected work and the full project archive
+* `/work/:slug` — individual case studies
+* `/about` — background and approach
+* `/cv` — curriculum vitae
+* `/contact` — contact details
+* `/policy` — site policy
+
+Project content can come from PocketBase. The site fetches published projects in route loaders
+with a short stale time, and falls back to the static content in `src/lib/site.ts` and
+`src/lib/details.ts` when PocketBase is unreachable or `VITE_POCKETBASE_URL` is unset. The same
+static files are the canonical seed for the `scripts/pb-sync.ts` upsert script.
+
+The app ships with a multi-stage Dockerfile and a compose file that exposes it on port `3210`.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+* [![TanStack Start][TanStack]][TanStack-url]
+* [![React][React.js]][React-url]
+* [![TypeScript][TypeScript]][TypeScript-url]
+* [![Vite][Vite]][Vite-url]
+* [![Tailwind CSS][TailwindCSS]][TailwindCSS-url]
+* [![PocketBase][PocketBase]][PocketBase-url]
+* [![Docker][Docker]][Docker-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Getting Started
+
+### Prerequisites
+
+* Node.js 20+ and npm
+* Optional: a PocketBase instance for dynamic content
+
+### Installation
+
+1. Clone the repository
+   ```sh
+   git clone https://github.com/Elouahabi-Naoufal/portfolio.git
+   cd portfolio
+   ```
+
+2. Install dependencies
+   ```sh
+   npm install
+   ```
+
+3. Optionally point the site at PocketBase
+   ```sh
+   export VITE_POCKETBASE_URL="https://your-pocketbase-host"
+   ```
+   Without it, the static content is used and the site works offline.
+
+4. Start the development server
+   ```sh
+   npm run dev
+   ```
+   Open the local URL printed by Vite.
+
+5. Build for production
+   ```sh
+   npm run build
+   npm run preview
+   ```
+
+Docker:
 ```sh
-npm i
-npm run dev
+docker compose up --build -d
 ```
+The site will be available on <http://localhost:3210>.
 
-Without `VITE_POCKETBASE_URL` (or with PB unreachable) the site serves the static content from `src/lib/site.ts` + `src/lib/details.ts` — the full site always works offline.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Content management (PocketBase)
+## Usage
 
-Content lives in two collections in PocketBase:
+* Browse projects from the home page and open a case study from its card.
+* The `/cv` route serves the CV page; `/contact` lists contact details.
+* When PocketBase is configured, editing a published `projects` record updates the site after
+  the loader cache expires. Unpublished records are hidden.
+* To push the static project data into PocketBase:
+  ```sh
+  PB_EMAIL=... PB_PASSWORD=... npx tsx scripts/pb-sync.ts
+  ```
+  The sync is idempotent and upserts by slug.
 
-| Collection | Visibility rule | Purpose |
-|---|---|---|
-| `projects` | `listRule/viewRule: published = true` | All case studies; drafts hidden from the public API |
-| `articles` | `listRule/viewRule: status = "published"` | Future writing (empty for now) |
+Available scripts:
 
-- **Writes** (`create/update/delete`) are **superuser-only** — the public API can never mutate content.
-- The admin dashboard is at `https://pb.naoufalelouahabi.com/_/` (superuser email/password in Dokploy env + KeePass).
-- The site fetches published projects server-side in route loaders (`src/lib/pb.ts`) with a 60s `staleTime`, falling back to the static files on any error.
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview the build |
+| `npm run lint` | ESLint |
+| `npm run format` | Prettier |
+| `npm test` | Vitest |
 
-### Environment variables
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-**Frontend app** (Dokploy → portfolio application → Environment):
+## Roadmap
 
-| Var | Example | Purpose |
-|---|---|---|
-| `VITE_POCKETBASE_URL` | `https://pb.naoufalelouahabi.com` | PB base URL; runtime-resolved on the server |
+- [x] Home, case study, about, CV, contact and policy pages
+- [x] PocketBase-backed projects with static fallback
+- [x] Idempotent PocketBase sync script
+- [x] Docker image and compose deployment
+- [ ] Add an articles index and detail route (the `articles` collection is reserved but unused)
+- [ ] Expand automated tests around content fallback and route rendering
+- [ ] Document the deployment and PocketBase backup procedure in the repository
 
-**PocketBase compose app** (`portfolio-pocketbase` repo):
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-| Var | Purpose |
-|---|---|
-| `PB_SUPERUSER_EMAIL` | Bootstrap superuser email (entrypoint `upsert`) |
-| `PB_SUPERUSER_PASSWORD` | Bootstrap superuser password |
+## Contributing
 
-Data persists in the `pb_data` named volume.
+Contributions are what make the open source community such an amazing place to learn, inspire,
+and create. Any contributions you make are **greatly appreciated**.
 
-### Publishing workflow
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-1. Edit or create a record in the PocketBase dashboard (or via the API as superuser).
-2. Set `published = true` (projects) or `status = "published"` (articles) to make it visible on the site.
-3. Unpublish anytime — the record disappears from the public API and the site falls back gracefully.
+### Top contributors:
 
-### Re-sync from the static source files
+<a href="https://github.com/Elouahabi-Naoufal/portfolio/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Elouahabi-Naoufal/portfolio" alt="contrib.rocks image" />
+</a>
 
-The TypeScript files remain the canonical seed. To push them into PocketBase (idempotent, upserts by slug):
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```sh
-PB_EMAIL=... PB_PASSWORD=... npx tsx scripts/pb-sync.ts
-# optional, when DNS is not set up locally:
-#   PB_IP=169.58.140.151
-# optional, for the current self-signed cert (until DNS → real LE cert):
-#   NODE_TLS_REJECT_UNAUTHORIZED=0
-```
+## License
 
-### Backup / restore
+This project is not licensed — all rights reserved.
 
-```sh
-# backup (from any machine that can reach PB as superuser)
-curl -X POST "https://pb.naoufalelouahabi.com/api/collections/backups" \
-  -H "Authorization: Bearer $TOKEN"
-# list: GET /api/backups  ·  download: GET /api/backups/download/<name>
-# restore: POST /api/backups/<name>   (on the server, via the filesystem / admin UI)
-```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-On the Dokploy host the raw data lives in the `pb_data` volume under the compose app; an offline backup is just a tar of that directory.
+## Contact
+
+Naoufal Elouahabi - [LinkedIn](https://www.linkedin.com/in/elouahabi-naoufal/) - elouahabi-naoufal1@gmail.com
+
+Project Link: [https://github.com/Elouahabi-Naoufal/portfolio](https://github.com/Elouahabi-Naoufal/portfolio)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Acknowledgments
+
+* [TanStack Start](https://tanstack.com/start)
+* [PocketBase](https://pocketbase.io/)
+* [shadcn/ui](https://ui.shadcn.com/)
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [Img Shields](https://shields.io)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+[contributors-shield]: https://img.shields.io/github/contributors/Elouahabi-Naoufal/portfolio.svg?style=for-the-badge
+[contributors-url]: https://github.com/Elouahabi-Naoufal/portfolio/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Elouahabi-Naoufal/portfolio.svg?style=for-the-badge
+[forks-url]: https://github.com/Elouahabi-Naoufal/portfolio/network/members
+[stars-shield]: https://img.shields.io/github/stars/Elouahabi-Naoufal/portfolio.svg?style=for-the-badge
+[stars-url]: https://github.com/Elouahabi-Naoufal/portfolio/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Elouahabi-Naoufal/portfolio.svg?style=for-the-badge
+[issues-url]: https://github.com/Elouahabi-Naoufal/portfolio/issues
+[license-shield]: https://img.shields.io/badge/license-none-lightgrey?style=for-the-badge
+[license-url]: #license
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/elouahabi-naoufal/
+[TanStack]: https://img.shields.io/badge/TanStack-FF4154?style=for-the-badge&logo=tanstack&logoColor=white
+[TanStack-url]: https://tanstack.com/start
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://react.dev/
+[TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Vite]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
+[Vite-url]: https://vite.dev/
+[TailwindCSS]: https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
+[TailwindCSS-url]: https://tailwindcss.com/
+[PocketBase]: https://img.shields.io/badge/PocketBase-B8DBE4?style=for-the-badge&logo=pocketbase&logoColor=black
+[PocketBase-url]: https://pocketbase.io/
+[Docker]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
