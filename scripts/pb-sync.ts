@@ -14,7 +14,15 @@
 import { Agent, setGlobalDispatcher } from "undici";
 import PocketBase from "pocketbase";
 import { PROJECT_DETAILS } from "../src/lib/details";
-import { PROJECTS } from "../src/lib/site";
+import { ARCHIVE, PROJECTS } from "../src/lib/site";
+
+// A project's category lives on its ARCHIVE entry, not on the project itself,
+// so it has to be looked up by slug. Reading `p.category` instead silently
+// collapses every project into one group.
+const CATEGORY_BY_SLUG = new Map<string, string>();
+for (const group of ARCHIVE) {
+  for (const slug of group.slugs) CATEGORY_BY_SLUG.set(slug, group.category);
+}
 
 const url = process.env.PB_URL ?? "https://pb.naoufalelouahabi.com";
 const email = process.env.PB_EMAIL;
@@ -72,7 +80,7 @@ async function main() {
       stack: p.stack,
       approach: p.approach,
       cover: p.cover,
-      category: p.category ?? "Full-Stack",
+      category: CATEGORY_BY_SLUG.get(p.slug) ?? p.category ?? "Full-Stack",
       featured: p.featured ?? false,
       githubPlanned: p.githubPlanned ?? false,
       published: true,
