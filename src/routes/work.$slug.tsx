@@ -79,20 +79,19 @@ function CaseStudy() {
       <section className="mt-14 border-t-2 border-ink pt-10">
         <h2 className="text-4xl font-bold md:text-5xl">Summary</h2>
         <p className="mt-6 text-xl font-semibold leading-relaxed">{p.summary}</p>
-        {p.context && <div className="mt-4 text-lg leading-relaxed text-muted-foreground prose">{renderMd(p.context)}</div>}
+        {p.context && <div className="mt-4 text-lg leading-relaxed text-muted-foreground prose" dangerouslySetInnerHTML={{ __html: renderMd(p.context) }} />}
       </section>
 
       {d && (
         <>
           <section className="mt-14 border-t-2 border-ink pt-10">
             <h2 className="text-4xl font-bold md:text-5xl">Full description</h2>
-            <div className="mt-5 text-lg leading-relaxed prose">{renderMd(d.description)}</div>
+            <div className="mt-5 text-lg leading-relaxed prose" dangerouslySetInnerHTML={{ __html: renderMd(d.description) }} />
           </section>
 
           <section className="mt-14 border-t-2 border-ink pt-10">
             <h2 className="text-4xl font-bold md:text-5xl">Architecture & structure</h2>
-            <div className="mt-6 border-2 border-ink bg-steel p-6 hard-shadow prose">
-              {renderMd(d.architecture)}
+            <div className="mt-6 border-2 border-ink bg-steel p-6 hard-shadow prose" dangerouslySetInnerHTML={{ __html: renderMd(d.architecture) }} />
             </div>
           </section>
 
@@ -128,7 +127,7 @@ function CaseStudy() {
               <li key={s.title} className={`border-2 border-ink p-6 ${i % 2 ? "bg-steel md:translate-y-6" : "bg-paper"}`}>
                 <span className="font-mono text-xs">step {String(i + 1).padStart(2, "0")}</span>
                 <h3 className="mt-2 text-2xl font-bold">{s.title}</h3>
-                <div className="mt-2 text-sm leading-relaxed prose">{renderMd(s.body)}</div>
+                <div className="mt-2 text-sm leading-relaxed prose" dangerouslySetInnerHTML={{ __html: renderMd(s.body) }} />
               </li>
             ))}
           </ol>

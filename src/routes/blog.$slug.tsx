@@ -47,7 +47,7 @@ function ArticlePage() {
         </div>
       )}
       {a.coverImage && <img src={a.coverImage} alt="" className="mt-8 w-full border-2 border-ink" loading="eager" />}
-      <div className="mt-10 text-base leading-relaxed prose">{renderMd(a.content)}</div>
+      <div className="mt-10 text-base leading-relaxed prose" dangerouslySetInnerHTML={{ __html: renderMd(a.content) }} />
     </article>
   );
 }
