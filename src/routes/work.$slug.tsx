@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ProjectCover } from "@/components/ProjectCard";
 import { fetchPublishedProject } from "@/lib/pb";
+import { renderMd } from "@/lib/markdown";
 import { PROJECT_DETAILS } from "@/lib/details";
 import { PROJECTS } from "@/lib/site";
 
@@ -78,24 +79,20 @@ function CaseStudy() {
       <section className="mt-14 border-t-2 border-ink pt-10">
         <h2 className="text-4xl font-bold md:text-5xl">Summary</h2>
         <p className="mt-6 text-xl font-semibold leading-relaxed">{p.summary}</p>
-        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{p.context}</p>
+        {p.context && <div className="mt-4 text-lg leading-relaxed text-muted-foreground prose">{renderMd(p.context)}</div>}
       </section>
 
       {d && (
         <>
           <section className="mt-14 border-t-2 border-ink pt-10">
             <h2 className="text-4xl font-bold md:text-5xl">Full description</h2>
-            {d.description.split("\n\n").map((para) => (
-              <p key={para.slice(0, 40)} className="mt-5 text-lg leading-relaxed">{para}</p>
-            ))}
+            <div className="mt-5 text-lg leading-relaxed prose">{renderMd(d.description)}</div>
           </section>
 
           <section className="mt-14 border-t-2 border-ink pt-10">
             <h2 className="text-4xl font-bold md:text-5xl">Architecture & structure</h2>
-            <div className="mt-6 border-2 border-ink bg-steel p-6 hard-shadow">
-              {d.architecture.split("\n\n").map((para) => (
-                <p key={para.slice(0, 40)} className="mt-3 text-base leading-relaxed first:mt-0">{para}</p>
-              ))}
+            <div className="mt-6 border-2 border-ink bg-steel p-6 hard-shadow prose">
+              {renderMd(d.architecture)}
             </div>
           </section>
 
@@ -131,7 +128,7 @@ function CaseStudy() {
               <li key={s.title} className={`border-2 border-ink p-6 ${i % 2 ? "bg-steel md:translate-y-6" : "bg-paper"}`}>
                 <span className="font-mono text-xs">step {String(i + 1).padStart(2, "0")}</span>
                 <h3 className="mt-2 text-2xl font-bold">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed">{s.body}</p>
+                <div className="mt-2 text-sm leading-relaxed prose">{renderMd(s.body)}</div>
               </li>
             ))}
           </ol>

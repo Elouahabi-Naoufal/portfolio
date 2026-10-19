@@ -14,6 +14,8 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CvRouteImport } from './routes/cv'
 import { Route as PolicyRouteImport } from './routes/policy'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as WorkSlugRouteImport } from './routes/work.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +43,16 @@ const PolicyRoute = PolicyRouteImport.update({
   path: '/policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkSlugRoute = WorkSlugRouteImport.update({
   id: '/work/$slug',
   path: '/work/$slug',
@@ -53,7 +65,9 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/cv': typeof CvRoute
   '/policy': typeof PolicyRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +75,9 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/cv': typeof CvRoute
   '/policy': typeof PolicyRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,15 +86,41 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/cv': typeof CvRoute
   '/policy': typeof PolicyRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/cv' | '/policy' | '/work/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/cv'
+    | '/policy'
+    | '/blog/$slug'
+    | '/work/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/cv' | '/policy' | '/work/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/cv'
+    | '/policy'
+    | '/blog/$slug'
+    | '/work/$slug'
+    | '/blog'
   id:
-    '__root__' | '/' | '/about' | '/contact' | '/cv' | '/policy' | '/work/$slug'
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/cv'
+    | '/policy'
+    | '/blog/$slug'
+    | '/work/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,7 +129,9 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CvRoute: typeof CvRoute
   PolicyRoute: typeof PolicyRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   WorkSlugRoute: typeof WorkSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -127,6 +171,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/work/$slug': {
       id: '/work/$slug'
       path: '/work/$slug'
@@ -143,7 +201,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CvRoute: CvRoute,
   PolicyRoute: PolicyRoute,
+  BlogSlugRoute: BlogSlugRoute,
   WorkSlugRoute: WorkSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -112,3 +112,79 @@ export async function fetchPublishedProject(
     return null;
   }
 }
+
+export type Article = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage?: string;
+  tags: string[];
+  category?: string;
+  readingTime?: string;
+  featured: boolean;
+  publishedAt?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  projectSlug?: string;
+};
+
+type PbArticleFields = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage?: string;
+  tags?: string[];
+  category?: string;
+  readingTime?: string;
+  featured?: boolean;
+  publishedAt?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  projectSlug?: string;
+};
+
+function toArticle(f: PbArticleFields): Article {
+  return {
+    slug: f.slug,
+    title: f.title,
+    excerpt: f.excerpt,
+    content: f.content,
+    coverImage: f.coverImage,
+    tags: f.tags ?? [],
+    category: f.category,
+    readingTime: f.readingTime,
+    featured: f.featured ?? false,
+    publishedAt: f.publishedAt,
+    seoTitle: f.seoTitle,
+    seoDescription: f.seoDescription,
+    projectSlug: f.projectSlug,
+  };
+}
+
+export async function fetchPublishedArticles(): Promise<Article[] | null> {
+  const pb = client();
+  if (!pb) return null;
+  try {
+    const records = await pb
+      .collection("articles")
+      .getFullList<PbArticleFields>({ sort: "-publishedAt" });
+    return records.length ? records.map(toArticle) : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchPublishedArticle(slug: string): Promise<Article | null> {
+  const pb = client();
+  if (!pb) return null;
+  try {
+    const r = await pb
+      .collection("articles")
+      .getFirstListItem<PbArticleFields>(`slug = "${slug.replace(/"/g, '\\"')}"`);
+    return toArticle(r);
+  } catch {
+    return null;
+  }
+}

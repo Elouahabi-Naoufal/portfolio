@@ -119,3 +119,16 @@
 @keyframes bob { 0%,100% { transform: translateY(0) rotate(var(--r,0deg)); } 50% { transform: translateY(-8px) rotate(var(--r,0deg)); } }
 @utility bob { animation: bob 6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .bob { animation: none; } html { scroll-behavior: auto; } }
+
+@utility prose {
+  & p { margin-top: 1em; &:first-child { margin-top: 0; } }
+  & ul, & ol { margin-top: 0.5em; padding-left: 1.5em; }
+  & li { margin-top: 0.25em; }
+  & code { font-family: var(--font-mono); font-size: 0.875em; background: var(--paper); padding: 0.15em 0.3em; border: 1px solid var(--ink); }
+  & pre { border: 2px solid var(--ink); background: var(--paper); padding: 1em; overflow-x: auto; margin-top: 1em; & code { background: none; border: none; } }
+  & strong { font-weight: 700; }
+  & a { text-decoration: underline; &:hover { text-decoration: none; } }
+  & blockquote { border-left: 3px solid var(--ink); padding-left: 1em; margin-top: 1em; color: var(--grey); }
+  & h3 { font-size: 1.2em; font-weight: 700; margin-top: 1em; font-family: var(--font-display); }
+  & hr { border: 1px solid var(--ink); margin-top: 1em; }
+}
