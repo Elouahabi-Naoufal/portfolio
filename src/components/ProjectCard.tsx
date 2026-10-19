@@ -16,9 +16,9 @@ const coverBg: Record<string, string> = {
 export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined }) {
   const coverBgClass = p.coverImage ? "bg-paper" : coverBg[p.cover];
   return (
-    <div className={`relative overflow-hidden border-b-2 border-ink ${coverBgClass} ${big ? "h-72 md:h-96" : "h-56"}`}>
+    <div className={`relative overflow-hidden border-b-2 border-ink ${coverBgClass} ${p.coverImage ? "h-auto min-h-40" : big ? "h-72 md:h-96" : "h-56"}`}>
       {p.coverImage ? (
-        <img src={p.coverImage} alt={p.title} className="absolute inset-0 h-full w-full object-cover" loading="eager" />
+        <img src={p.coverImage} alt={p.title} className="w-full object-contain" loading="eager" />
       ) : p.photo ? (
         <img
           src={p.photo}
