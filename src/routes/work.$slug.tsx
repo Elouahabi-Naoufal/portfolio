@@ -92,7 +92,6 @@ function CaseStudy() {
           <section className="mt-14 border-t-2 border-ink pt-10">
             <h2 className="text-4xl font-bold md:text-5xl">Architecture & structure</h2>
             <div className="mt-6 border-2 border-ink bg-steel p-6 hard-shadow prose" dangerouslySetInnerHTML={{ __html: renderMd(d.architecture) }} />
-            </div>
           </section>
 
           <section className="mt-14 border-t-2 border-ink pt-10">
