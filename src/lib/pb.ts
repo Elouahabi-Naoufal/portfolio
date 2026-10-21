@@ -192,3 +192,34 @@ export async function fetchPublishedArticle(slug: string): Promise<Article | nul
     return null;
   }
 }
+
+/** CV PDF file URLs keyed by language code ("en" | "fr"). */
+export type CvFiles = {
+  en?: string;
+  fr?: string;
+};
+
+type PbCvFields = {
+  id: string;
+  language: string;
+  label?: string;
+  pdf?: string;
+};
+
+/** Fetch CV PDF urls from the `cvs` collection. Returns null when PocketBase is unreachable or empty. */
+export async function fetchCvs(): Promise<CvFiles | null> {
+  const pb = client();
+  if (!pb || !url) return null;
+  try {
+    const records = await pb.collection("cvs").getFullList<PbCvFields>({ sort: "language" });
+    const out: CvFiles = {};
+    for (const r of records) {
+      if (r.pdf && (r.language === "en" || r.language === "fr")) {
+        out[r.language] = `${url}/api/files/cvs/${r.id}/${r.pdf}`;
+      }
+    }
+    return out.en || out.fr ? out : null;
+  } catch {
+    return null;
+  }
+}

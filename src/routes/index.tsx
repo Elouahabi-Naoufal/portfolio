@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProjectCard } from "@/components/ProjectCard";
+import { CvDownloadButton } from "@/components/CvDownloadButton";
 import { fetchPublishedProjects } from "@/lib/pb";
 import { ARCHIVE, EXPLORING, PROJECTS, SITE } from "@/lib/site";
 import { PROJECT_DETAILS } from "@/lib/details";
@@ -73,7 +74,7 @@ function Index() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="#work" className="btn bg-ink text-paper">Explore my projects →</a>
-              <Link to="/cv" className="btn bg-paper">Download my CV</Link>
+              <CvDownloadButton />
             </div>
           </div>
           <div className="relative hidden min-h-[380px] md:block" aria-hidden>
